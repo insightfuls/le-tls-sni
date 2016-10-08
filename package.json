@@ -1,0 +1,14 @@
+{
+  "name": "le-tls-sni",
+  "version": "0.1.0",
+  "description": "Module for use with node-letsencrypt to generate certificates to satisfy tls-sni-01 and tls-sni-02 ACME challenges.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ben Schmidt",
+  "license": "MIT",
+  "dependencies": {
+    "node-forge": "^0.6.43"
+  }
+}
