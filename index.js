@@ -1,3 +1,4 @@
+'use strict';
 
 var forge = require('node-forge');
 var pki = forge.pki;

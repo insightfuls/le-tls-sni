@@ -4,6 +4,9 @@ le-tls-sni
 Module for use with node-letsencrypt to generate certificates to satisfy
 tls-sni-01 and tls-sni-02 ACME challenges.
 
+It assumes `n` is just 1 for tls-sni-01 challenges. Let's Encrypt's CA
+`boulder` omits `n` and acts as if it were 1.
+
 Install
 -------
 
