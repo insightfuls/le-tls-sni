@@ -1,6 +1,6 @@
 {
   "name": "le-tls-sni",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Module for use with node-letsencrypt to generate certificates to satisfy tls-sni-01 and tls-sni-02 ACME challenges.",
   "main": "index.js",
   "scripts": {

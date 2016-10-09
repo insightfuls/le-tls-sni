@@ -23,6 +23,7 @@ module.exports.generate = function (args, domain, token, secret, cb) {
       break;
     default:
       cb(new Error("incompatible challenge type"));
+      return;
   }
   rsa.generateKeyPair({ bits: 2048, e: 0x10001, workers: 2 }, function(err, pair) {
     var cert = pki.createCertificate();
