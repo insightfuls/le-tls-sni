@@ -5,6 +5,8 @@ var pki = forge.pki;
 var rsa = require('rsa-compat').RSA;
 var sha256 = forge.md.sha256;
 
+var pair;
+
 module.exports.generate = function (args, domain, token, secret, cb) {
   var subject, sanA, sanB, digester = sha256.create(), suffix = ".acme.invalid";
   switch (args.challengeType) {
@@ -25,7 +27,17 @@ module.exports.generate = function (args, domain, token, secret, cb) {
       cb(new Error("incompatible challenge type"));
       return;
   }
-  rsa.generateKeypair(2048, 0x10001, { public: true, pem: true }, function(err, pair) {
+  if (pair) {
+    pairGenerated(null, pair);
+  } else {
+    rsa.generateKeypair(2048, 0x10001, { public: true, pem: true }, pairGenerated);
+  }
+  function pairGenerated(err, newPair) {
+    if (err) {
+      cb(err);
+      return;
+    }
+    pair = newPair;
     pair.publicKey = pki.publicKeyFromPem(pair.publicKeyPem);
     pair.privateKey = pki.privateKeyFromPem(pair.privateKeyPem);
     var cert = pki.createCertificate();
@@ -65,6 +77,6 @@ module.exports.generate = function (args, domain, token, secret, cb) {
     , issuedAt: cert.validity.notBefore.getTime()
     , expiresAt: cert.validity.notAfter.getTime()
     });
-  });
+  }
 };
 
