@@ -2,7 +2,7 @@
 
 var forge = require('node-forge');
 var pki = forge.pki;
-var rsa = pki.rsa;
+var rsa = require('rsa-compat').RSA;
 var sha256 = forge.md.sha256;
 
 module.exports.generate = function (args, domain, token, secret, cb) {
@@ -25,7 +25,9 @@ module.exports.generate = function (args, domain, token, secret, cb) {
       cb(new Error("incompatible challenge type"));
       return;
   }
-  rsa.generateKeyPair({ bits: 2048, e: 0x10001, workers: 2 }, function(err, pair) {
+  rsa.generateKeypair(2048, 0x10001, { public: true, pem: true }, function(err, pair) {
+    pair.publicKey = pki.publicKeyFromPem(pair.publicKeyPem);
+    pair.privateKey = pki.privateKeyFromPem(pair.privateKeyPem);
     var cert = pki.createCertificate();
     cert.publicKey = pair.publicKey;
     cert.serialNumber = '01';
@@ -56,7 +58,7 @@ module.exports.generate = function (args, domain, token, secret, cb) {
     }]);
     cert.sign(pair.privateKey, digester);
     cb(null, {
-      privkey: pki.privateKeyToPem(pair.privateKey)
+      privkey: pair.privateKeyPem
     , cert: pki.certificateToPem(cert)
     , subject: subject
     , altnames: altNames

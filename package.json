@@ -1,6 +1,6 @@
 {
   "name": "le-tls-sni",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Module for use with node-letsencrypt to generate certificates to satisfy tls-sni-01 and tls-sni-02 ACME challenges.",
   "main": "index.js",
   "scripts": {
@@ -28,7 +28,8 @@
   },
   "homepage": "https://github.com/insightfuls/le-tls-sni#readme",
   "dependencies": {
-    "node-forge": "^0.6.43"
+    "node-forge": "^0.6.43",
+    "rsa-compat": "^1.2.7"
   },
   "devDependencies": {
     "certpem": "^1.0.1"
